@@ -39,6 +39,10 @@
       src: url(slkscre.ttf);
     }
 
+    .highlightme:hover {
+      color: orange;
+    }
+
     .container{
       margin: 0 auto;
     }
@@ -61,6 +65,18 @@
       font-size: 15px;
       
     }
+
+    #contente{
+
+      padding: 18px;
+      margin-left: 15px;
+      min-height: 550px;
+      color: #696969;
+      width: 700px;
+      font-size: 15px;
+      
+    }
+
     #content2{
 
       padding: 18px;
@@ -75,7 +91,7 @@
 
       padding: 18px;
       margin-left: 15px;
-      min-height: 500px;
+      min-height: 670px;
       color: #696969;
       width: 700px;
       font-size: 15px;
@@ -128,7 +144,15 @@
       will-change: position, transform;
     }
 
-    #sidebar1{
+    #sidebart{
+      float: right;
+      margin-top: 40px;
+      width: 500px;
+      color: #ffbdbd;
+      will-change: min-height;
+    }
+
+    #sidebare{
       float: right;
       margin-top: 40px;
       width: 500px;
@@ -207,7 +231,7 @@
 <body>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-
+  <script> var gflag = false;</script>
   
 
   <header>
@@ -241,26 +265,32 @@
   </div>
    &nbsp
   <div class="container">
-    <div id="sidebar1">
+    <div id="sidebare">
       
-          <div id="canvas1"></div>
+          <div id="canvase"></div>
       
     </div>
+  <div id="contente">
+      <h2> How is a Block created ?</h2>
+      <p> As we mentioned earlier, a block consists of data. This data could be transactions between users of the block-chain. To understand how a block is created let's imagine that we are miners</p>
+      <p> Transactions taking place in the network are sent to all nodes. Since we are miners we receive these transactions as well. Click <span class="highlightme" onclick="abhiFunc()">"Receive New Transaction"</span> to see a new Transaction added. The limit on number of transactions we will be adding to our block is 5</p>
+
+      <p> Now that we have all our transactions. Click on them to approve them except the last one and then click <span class="highlightme" onclick="disFunc()">"Attempt Block Creation"</span>. Did it fail ? This is because all the transactions in a Block need to be approved and validated by the miner. This ensures valid transactions in the block-chain. Now approve all the last transaction too and click the button. You'll see that a New Block is created</p>
+      <input type="button" style = "font-family: myFirstFont"value = "Receive New Transaction" name="Transaction" onclick="abhiFunc()">
+      <input type="button" style = "font-family: myFirstFont"value = "Attempt Block Creation" name="Block" onclick="disFunc()">
+
+      <p><div id="message" style="color: #006400;"></div></p>
   </div>
-  <div id="content2">
-      <h2> How is a Block-Chain created from a Block ?</h2>
-      <p> Once you have the data you want to include in a block, the SHA-256 algorithm generates a new hash that has to be used for this block, the block then utilizes the hash for the previous block in order to create the chaining effect. </p><p>You can view how this works in the visualization. Click on add block to add a new block. Notice how the new block includes the previous block's hash in it. This chaining is what ensures that the blocks have a sequence to them and also ensures security. For adding your own block, you would have to correct subsequent blocks and therefore making changes to block is extremely difficult in blockchain</p>
-  </div>
+</div>
   <div class="container">
     <div id="sidebar2">
       
         <div id="canvas"></div>
       
     </div>
-  </div>
   <div id="content3">
       <h2> How is a Block approved to get added to the Chain ?</h2>
-      <p> Once a miner has verified the transactions that he listens to on the node. A decision is made on which transactions to include in the block. After this, the miner solves a complex mathematical problem, the goal of which is to find a number known as the "nonce"</p>
+      <p> Miner ! You have now validated transactions and created a block. In the background you solved a complex mathematical problem, the goal of which was to find a number known as the "nonce". This was used to create a hash for the block you created. Now we want to verify if the solution to this mathematical problem was correct or not. So we need to ask our fellow Miners. </p>
 
      
       <div class = "viz-2-controls">
@@ -269,7 +299,7 @@
             <input id="radius" name="radius" value=200>
 
             <label for="numNodes">Number of elements:</label>
-            <input type="text" id="numNodes" name="radius" value=100>
+            <input type="text" id="numNodes" name="radius" value=15>
 
             <input type="button" style = "font-family: myFirstFont"value = "MINE" name="Reset" onclick="draw()">
         </form>
@@ -284,36 +314,55 @@
         <image id = "myCoin4" display="none" xlink:href="./img/32-done.gif" x="200" y="0" height="100px" width="100px"/>
         </svg>
       </div>
+      <p> Try clicking on <span class="highlightme" >"Add Block"</span> in the Next Section. If your block didn't get approved by peers you would not be able to add this block to the Blockchain. You then have to start creating the block all over. If your block got appoved, click the "Add Block" button to add your newly created block to the chain</p>
+      <p style="color : #7f0000;"> *Only once your block is approved by peers, can it get added to chain*</p>
+  </div>
+</div>
+<div class="container">
+    <div id="sidebart">
+      
+          <div id="canvas1"></div>
 
+      
+    </div>
+  <div id="content2">
+      <h2> How is a Block-Chain created from a Block ?</h2>
+      <p> Once you have the data you want to include in a block, the SHA-256 algorithm generates a new hash that has to be used for this block, the block then utilizes the hash for the previous block in order to create the chaining effect. </p><p>You can view how this works in the visualization. Click on add block to add a new block. Notice how the new block includes the previous block's hash in it. This chaining is what ensures that the blocks have a sequence to them and also ensures security. For adding your own block, you would have to correct subsequent blocks and therefore making changes to block is extremely difficult in blockchain</p>
+  </div>
   </div>
   <div class="container">
       <div id = "sidebar3">
           <div id="canvas-last"></div>
       </div>
-  </div>
   <div id="content4">
     <h2> Cryptocurrency : Application of Blockchain </h2>
       <div class="viz-4-controls">
         <form>
-           <p><label> ASIC</label></p>
-           &nbsp
+           <label> ASIC</label>
+           <p style="font-size: 10px;"> is an integrated circuit customized for a particular use, rather than intended for general-purpose use. In the Cryptocurrency world, ASIC is used for mining bitcoins</p>
+          
         </form>
       </div>
+      &nbsp
       <div class="viz-4-controls">
         <form>
-           <p><label> GPU </label></p>
-           &nbsp
+           <label> GPU </label>
+           <p style="font-size: 10px;"> is a graphical processing unit. Since it is wat faster at computations than CPU it is preferred to mine cryptocurrencies over CPU
+         
         </form> 
       </div>
+      &nbsp
       <div class="viz-4-controls">
         <form>
-           <p><label> CPU </label></p>
-           &nbsp
+           <label> CPU </label>
+           <p style="font-size: 10px;"> is a central processing unit. It used to be used to mine bitcoins but with increase in difficulty, it takes up a lot of power and dies out.</p>
+          
         </form>
       </div>
       <p><button type="button" onclick="myfunction()"> Start Mining </button></p>
 
   </div>
+</div>
 
 
 
@@ -328,6 +377,7 @@
   <script type="text/javascript" src="./js/rAF.js"></script>
   <script type="text/javascript" src="./js/ResizeSensor.js"></script>
   <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
+  <script type="text/javascript" src="js/abhinav.js"></script>
   <script type="text/javascript" src="js/harsh.js"></script>
   <script type="text/javascript" src="js/yash.js"></script>
   <script type="text/javascript" src="js/approve.js"></script>
