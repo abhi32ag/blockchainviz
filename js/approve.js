@@ -83,8 +83,10 @@ numB = 0;
                         document.getElementById('viz-2-response').innerHTML = 'Block approved by peers. Here is your reward !';
                         coinSound.play();
                         coinAppear(gk);
+                        gflag = true;
                       }
                       else {
+                        gflag = false;
                         document.getElementById('viz-2-response').innerHTML = 'Block not approved, try again';
                         //document.getElementById('myCoin').style.display = "none";
                         }
@@ -114,7 +116,7 @@ var coinAppear  = function(k) {
 
 
 var draw = function () {
- var numNodes = $("#numNodes").val() || 100;
+ var numNodes = $("#numNodes").val() || 15;
  numT = numNodes;
  var radius = $("#radius").val() || 200;
  var nodes = createNodes(numNodes, radius);

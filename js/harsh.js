@@ -125,8 +125,9 @@ var rectangle = rectGroup.selectAll("rect")
                                
    d3.select("#content2").append("button")
     .text("Add a new Block")
-    .on("click",function(){
-
+    .on("click",function harshClick(){
+if(gflag == true) {
+    gflag = false;
 j = z + 1;
 counter++;
 DATA = Math.random();
@@ -224,6 +225,6 @@ DATA = Math.random();
                   
                              
                                    
-
+}
                                
                 }) // on click function ends
