@@ -141,15 +141,18 @@ d3.select("#content2").append("button")
     .text("Add a new Block")
     .on("click",function(){
 
-        cf++;
-        if ( cf <5 && gflag == true){
+     
+        if (  gflag == true){
 
-     gflag=false;
+        gflag=false;
 
 
 j = z +1;
 counter++;
 DATA = Math.random();
+                            if ( data_h.length < 6 ){
+
+                    
                             console.log("dataset " + data_h);
                              maxValue = d3.max(data_h);
                             console.log("Max Value is " + maxValue);
@@ -290,6 +293,7 @@ DATA = Math.random();
           k=k+80;                       
 
         }
+    }
         else {
             document.getElementById("goback").innerHTML="Go Back to Previous Section to get your block approved by Peers";
             document.getElementById("goback").style.color='#7f0000';
