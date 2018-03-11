@@ -38,7 +38,7 @@ var bWidth=400;
 //Make an SVG Container
 var svgContainer = d3.select("#canvas1").append("svg")
                                      .attr("width", 500)
-                                     .attr("height", 700);
+                                     .attr("height", 450);
 
 var dataset = [ 30 ];
 var z =0;
@@ -89,6 +89,7 @@ var rectangle = rectGroup.selectAll("rect")
                          .style('fill','white')
                          .style('filter',"url(#drop-shadow)")
                          .attr('stroke','black')
+                         
 
                          .on('mouseover', function(d, i) { 
                             d3.select(this).transition().duration(1000).attr("x",50).style('fill','orange');})                 
@@ -130,6 +131,7 @@ if(gflag == true) {
     gflag = false;
 j = z + 1;
 counter++;
+
 DATA = Math.random();
                              maxValue = d3.max(dataset);
                             console.log("Max Value is " + maxValue);
@@ -225,6 +227,10 @@ DATA = Math.random();
                   
                              
                                    
+}
+else {
+      document.getElementById("goback").innerHTML="Go Back to Previous Section to get your block approved by Peers";
+      document.getElementById("goback").style.color='red';
 }
                                
                 }) // on click function ends

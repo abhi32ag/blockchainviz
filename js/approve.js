@@ -84,6 +84,7 @@ numB = 0;
                         coinSound.play();
                         coinAppear(gk);
                         gflag = true;
+                        document.getElementById("goback").innerHTML="";
                       }
                       else {
                         gflag = false;

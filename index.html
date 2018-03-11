@@ -21,6 +21,14 @@
       font-size: 30px;
     }
 
+    p {
+     font-family: raleway;
+     color:'black';
+     font-weight: bold;
+
+
+    }
+
     h2:after {
     content:' ';
     display:block;
@@ -37,6 +45,11 @@
     @font-face {
       font-family: myFirstFont;
       src: url(slkscre.ttf);
+    }
+
+    @font-face {
+      font-family: raleway;
+      src: url(raleway.ttf);
     }
 
     .highlightme:hover {
@@ -70,7 +83,7 @@
 
       padding: 18px;
       margin-left: 15px;
-      min-height: 550px;
+      min-height: 400px;
       color: #696969;
       width: 700px;
       font-size: 15px;
@@ -81,7 +94,7 @@
 
       padding: 18px;
       margin-left: 15px;
-      min-height: 800px;
+      min-height: 550px;
       color: #696969;
       width: 700px;
       font-size: 15px;
@@ -91,7 +104,7 @@
 
       padding: 18px;
       margin-left: 15px;
-      min-height: 670px;
+      min-height: 450px;
       color: #696969;
       width: 700px;
       font-size: 15px;
@@ -110,7 +123,7 @@
 
       padding: 18px;
       margin-left: 15px;
-      min-height: 600px;
+      min-height: 500px;
       color: #696969;
       width: 700px;
       font-size: 15px;
@@ -232,6 +245,7 @@
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script> var gflag = false;</script>
+ 
   
 
   <header>
@@ -251,7 +265,9 @@
   <div class="container">
     <div id="sidebar">
 
-        <div id="test">
+       
+        <div id="bezier-demo">
+          
         </div>
         <p></p>
      
@@ -260,7 +276,7 @@
       <h2> What is a block ? </h2>
       <p>A block is like a page or a ledger that consist of mainly three components .</p>
 
-      <p>It consists of the data, a hash to protect the data and a previous hash inorder to form a chain of blocks.</p>
+      <p>It consists of the data, a hash to protect the data and a previous hash inorder to form a chain of blocks.In the world of cryptocurrency, a block contains more than 500 transactions on average. The average size of a block seems to be 1MB. In Bitcoin Cash ( a hard fork from the Bitcoin blockchain ), the size of a block can go up to 8MB. This enables more transactions to be processed per second.</p>
     </div>  
   </div>
    &nbsp
@@ -298,10 +314,10 @@
             <label for="radius">Radius:</label>
             <input id="radius" name="radius" value=200>
 
-            <label for="numNodes">Number of elements:</label>
+            <label for="numNodes">Peers in the Network:</label>
             <input type="text" id="numNodes" name="radius" value=15>
 
-            <input type="button" style = "font-family: myFirstFont"value = "MINE" name="Reset" onclick="draw()">
+            <input type="button" style = "font-family: myFirstFont"value = "Mine" name="Reset" onclick="draw()">
         </form>
         &nbsp
         <div id='viz-2-response'></div>
@@ -321,15 +337,17 @@
 <div class="container">
     <div id="sidebart">
       
-          <div id="canvas1"></div>
+        <div id="crypt"></div>
 
       
     </div>
   <div id="content2">
+      
       <h2> How is a Block-Chain created from a Block ?</h2>
       <p> Once you have the data you want to include in a block, the SHA-256 algorithm generates a new hash that has to be used for this block, the block then utilizes the hash for the previous block in order to create the chaining effect. </p><p>You can view how this works in the visualization. Click on add block to add a new block. Notice how the new block includes the previous block's hash in it. This chaining is what ensures that the blocks have a sequence to them and also ensures security. For adding your own block, you would have to correct subsequent blocks and therefore making changes to block is extremely difficult in blockchain</p>
-  </div>
-  </div>
+    <p id='goback'></p>
+    </div>
+</div>
   <div class="container">
       <div id = "sidebar3">
           <div id="canvas-last"></div>
@@ -378,9 +396,11 @@
   <script type="text/javascript" src="./js/ResizeSensor.js"></script>
   <script type="text/javascript" src="./js/sticky-sidebar.js"></script>
   <script type="text/javascript" src="js/abhinav.js"></script>
-  <script type="text/javascript" src="js/harsh.js"></script>
+  <script type="text/javascript" src="js/cryptrect.js"></script>
   <script type="text/javascript" src="js/yash.js"></script>
   <script type="text/javascript" src="js/approve.js"></script>
+  <script type="text/javascript" src="js/firstviz.js"></script>
+
   <script type="text/javascript">
 
 
@@ -403,183 +423,7 @@
 
 
 
-    var data = [
-   { "name" : "ABC", "parent":"DEF", "relation": "ghi", "depth": 1 },
-   { "name" : "DEF", "parent":"null", "relation": "null", "depth": 0 },
-   { "name" : "new_name", "parent":"ABC", "relation": "rel", "depth": 2 },
-   { "name" : "new_name2", "parent":"ABC", "relation": "foo", "depth": 2 },
-   { "name" : "Foo", "parent":"DEF", "relation": "rel", "depth": 2 }
-  ];
-
-// *********** Convert flat data into a nice tree ***************
-// create a name: node map
-var dataMap = data.reduce(function(map, node) {
-  map[node.name] = node;
-  return map;
-}, {});
-
-var symbol = d3.svg.symbol(d3.symbolSquare);
-
-// create the tree array
-var treeData = [];
-data.forEach(function(node) {
-  // add to parent
-  var parent = dataMap[node.parent];
-  if (parent) {
-    // create child array if it doesn't exist
-    (parent.children || (parent.children = []))
-      // add node to child array
-      .push(node);
-  } else {
-    // parent is null or missing
-    treeData.push(node);
-  }
-});
-
-// show what we've got
-d3.select('#area1').append('pre')
-    .text(JSON.stringify(treeData, null, '  '));
-
-// ************** Generate the tree diagram  *****************
-var margin = {top: 20, right: 120, bottom: 20, left: 50},
-  width = 560 - margin.right - margin.left,
-  height = 300 - margin.top - margin.bottom;
   
-var i = 0,
-  duration = 750,
-  root;
-
-var tree = d3.layout.tree()
-  .size([height, width]);
-
-var diagonal = d3.svg.diagonal()
-  .projection(function(d) { return [d.y, d.x]; });
-
-var svg = d3.select("#test").append("svg")
-  .attr("width", width + margin.right + margin.left)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-d3.json("./data/example.json", function(error, DEF) {
-  root = DEF;
-  root.x0 = height / 2;
-  root.y0 = 0;
-
-  function collapse(d) {
-  if (d.children) {
-    d._children = d.children;
-    d._children.forEach(collapse);
-    d.children = null;
-  }
-  }
-  
-  root.children.forEach(collapse);
-  update(root);
-});
-
-d3.select(self.frameElement).style("height", "800px");
-
-function update(source) {
-
-  // Compute the new tree layout.
-  var nodes = tree.nodes(root).reverse(),
-    links = tree.links(nodes);
-
-  // Normalize for fixed-depth.
-  nodes.forEach(function(d) { d.y = d.depth * 50; });
-
-  // Update the nodes…
-  var node = svg.selectAll("g.node")
-    .data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-  // Enter any new nodes at the parent's previous position.
-  var nodeEnter = node.enter().append("g")
-    .attr("class", "node")
-    .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-    .on("click", click);
-
-  nodeEnter.append("circle")
-    .attr("r", 1e-6)
-    .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-  nodeEnter.append("text")
-    .style('font-family','myFirstFont')
-    .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
-    .attr("dy", ".35em")
-    .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-    .text(function(d) { return d.name; })
-    .style("fill-opacity", 1e-6)
-    .style("font-size", '10px');
-
-  // Transition nodes to their new position.
-  var nodeUpdate = node.transition()
-    .duration(duration)
-    .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
-
-  nodeUpdate.select("circle")
-    .attr("r", 8)
-    .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-  nodeUpdate.select("text")
-    .style("fill-opacity", 1);
-
-  // Transition exiting nodes to the parent's new position.
-  var nodeExit = node.exit().transition()
-    .duration(duration)
-    .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
-    .remove();
-
-  nodeExit.select("circle")
-    .attr("r", 1e-6);
-
-  nodeExit.select("text")
-    .style("fill-opacity", 1e-6);
-
-  // Update the links…
-  var link = svg.selectAll("path.link")
-    .data(links, function(d) { return d.target.id; });
-
-  // Enter any new links at the parent's previous position.
-  link.enter().insert("path", "g")
-    .attr("class", "link")
-    .attr("d", function(d) {
-    var o = {x: source.x0, y: source.y0};
-    return diagonal({source: o, target: o});
-    });
-
-  // Transition links to their new position.
-  link.transition()
-    .duration(duration)
-    .attr("d", diagonal);
-
-  // Transition exiting nodes to the parent's new position.
-  link.exit().transition()
-    .duration(duration)
-    .attr("d", function(d) {
-    var o = {x: source.x, y: source.y};
-    return diagonal({source: o, target: o});
-    })
-    .remove();
-
-  // Stash the old positions for transition.
-  nodes.forEach(function(d) {
-  d.x0 = d.x;
-  d.y0 = d.y;
-  });
-}
-
-// Toggle children on click.
-function click(d) {
-  if (d.children) {
-  d._children = d.children;
-  d.children = null;
-  } else {
-  d.children = d._children;
-  d._children = null;
-  }
-  update(d);
-}
   </script>
 </body>
 </html>

@@ -178,12 +178,12 @@ function disFunc() {
 		}, 1200)
 		
 	document.getElementById('message').style.color = '#006400'
-	document.getElementById("message").innerHTML = 'Block Created ! Congratulations Miner !';
+	document.getElementById("message").innerHTML = 'Block Created ! Congratulations Miner !. Now proceed to the next step.';
 	}
 
 	else {
 		document.getElementById('message').style.color = '#7f0000';
-		document.getElementById("message").innerHTML = 'Block could not be Approved. Try Again !';
+		document.getElementById("message").innerHTML = 'Block could not be Approved. Try Again !. Click on the transactions to approve them';
 		console.log("All transactions not approved");
 	}
 }
