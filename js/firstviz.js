@@ -7,7 +7,7 @@ var bWidth=650;
 var ht = 0 ;
    
     var cc=0;//for creating id for paths linking each block
-    var text=["Hash hides the information about transactions that a block is composed of.","Data is the information the a particular block holds.", "Block no is the index of the particular block in the entire Blockchain."]
+    var text=["Hash hides the information about transactions that a block is composed of.","Data is the information a particular block holds.", "Block number is the index of the particular block in the entire Blockchain."]
    // var text =["INFO1","INFO2","INFO3"];
     var points = {
                      x          :20,
